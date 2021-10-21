@@ -1,0 +1,38 @@
+{
+    "source": "src",
+    "target": "tgt",
+    "data": {
+    	"sample": 100,
+        "sample_dist": [
+            {
+                "path": "/data/corpus",
+                "distribution": [
+                    ["train", "*"],
+                ]
+            }
+    	]
+    },
+    "preprocess": [
+        {
+            "op":"tokenization",
+            "source": {
+                "mode": "space"
+            },
+            "target": {
+                "mode": "space"
+            }
+        }
+    ],
+    "vocabulary": {
+        "source": {
+            "path": "/data/vocab/shared-vocab.txt"
+        },
+        "target": {
+            "path": "/data/vocab/shared-vocab.txt"
+        }
+    },
+    "options": {
+        "model_type": "Transformer",
+        "auto_config": true
+    }
+}

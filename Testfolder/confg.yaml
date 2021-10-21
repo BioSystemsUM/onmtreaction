@@ -1,0 +1,76 @@
+# config.yaml
+#pwd = /home/data/
+
+# GENERAL / SAVE OPTS:
+save_data: samples
+src_vocab: vocab/vocab.src
+save_model: model/model
+overwrite: False
+
+## CORPUS OPTS:
+data:
+  corpus_1:
+    path_src: corpus/train.src
+    path_tgt: corpus/train.tgt
+  valid:
+    path_src: corpus/val.src
+    path_tgt: corpus/val.tgt
+
+## PREPROCESS:
+src_seq_length: 1000
+tgt_seq_length: 1000
+src_vocab_size: 1000
+tgt_vocab_size: 1000
+share_vocab: true
+
+## TRAIN:
+world_size: 1
+gpu_ranks: [0]
+seed: 42
+#
+save_checkpoint_steps: 5
+keep_checkpoint: 5
+train_steps: 100
+report_every: 10
+#
+param_init: 0
+param_init_glorot: true
+max_generator_batches: 32
+batch_size: 4096
+batch_type: tokens
+normalization: tokens
+max_grad_norm: 0
+accum_count: 4
+#
+optim: adam
+adam_beta1: 0.9
+adam_beta2: 0.998
+decay_method: noam
+#
+warmup_steps: 8000
+learning_rate: 2
+label_smoothing: 0.0
+layers: 4
+rnn_size: 256
+word_vec_size: 256
+encoder_type: transformer
+decoder_type: transformer
+#
+dropout: [0.1]
+position_encoding: true
+share_embeddings: true
+global_attention: general
+global_attention_function: softmax
+self_attn_type: scaled-dot
+heads: 8
+transformer_ff: 2048
+
+## TRANSLATE
+#model: model/model_average.pt
+#src: corpus/test.src
+#tgt: corpus/test.tgt optional
+#output: pred_model_average.txt
+#
+#batch_size: 64 -> comand line provided value (override of the specified value above) 
+#max_length: 200
+#replace_unk: true

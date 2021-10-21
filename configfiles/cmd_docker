@@ -1,0 +1,25 @@
+#docker commands
+
+docker build -t onmt -f Docker/DockerfileONMT .
+
+docker run -it --rm --gpus all -v ~/Documents/onmt/folder:/home/data/ -u 1000:1000 onmt bash
+
+## INSIDE CONTAINER
+
+	> cd data/
+
+    # BUILD VOCAB
+	> onmt_build_vocab -config confg.yaml
+    
+    # TRAIN MODEL
+	> onmt_train -config confg.yaml
+
+    # AVERAGE MODEL
+	> cd models/
+	> onmt_average_model -m model_step_* -o model_average.pt 
+	> cd ../
+
+    # TRANSLATE
+	> onmt_translate -config confg.yaml --batch_size 64
+
+    # SCORES 

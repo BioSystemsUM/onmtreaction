@@ -1,0 +1,12 @@
+# configtrain.yaml
+#pwd = /home/data/
+
+## TRANSLATE:
+model: model/model_average.pt
+src: corpus/test.src
+#tgt: corpus/test.tgt optional
+output:pred_model_average.txt
+#
+#batch_size: 64 -> comand line provided value (override of the specified value above) 
+max_length: 200
+replace_unk: true

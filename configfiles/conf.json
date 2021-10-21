@@ -1,0 +1,86 @@
+{
+    "source": "src",
+    "target": "tgt",
+    "data": {
+    	"sample": 1000,
+        "sample_dist": [
+            {
+                "path": "/data/corpus",
+                "distribution": [
+                    ["train", "*"],
+                ]
+            }
+    	]
+    },
+    "preprocess": [
+        {
+            "op":"tokenization",
+            "source": {
+                "mode": "space"
+            },
+            "target": {
+                "mode": "space"
+            }
+        }
+    ],
+    "vocabulary": {
+        "source": {
+            "path": "/data/vocab/share-vocab.txt"
+        },
+        "target": {
+            "path": "/data/vocab/share-vocab.txt"
+        }
+    },
+    "options": {
+    	"config": {
+            "preprocess": {
+            },
+            "buildvocab": {
+            	"src_seq_length": 1000,
+            	"tgt_seq_length": 1000,
+            	"share_vocab": true
+            },
+            "train": {
+            	"src_vocab_size": 20,
+            	"tgt_vocab_size": 20,
+		"world_size": 1,
+		"gpu_ranks": [0],
+		"seed": 42,
+		"save_checkpoint_steps": 10,
+		"keep_checkpoint": 5,
+		"train_steps": 100,
+		"param_init": 0,
+		"param_init_glorot": true,
+		"max_generator_batches": 32,
+		"batch_size": 4096,
+		"batch_type": "tokens",
+		"normalization": "tokens",
+		"max_grad_norm": 0,
+		"accum_count": 4,
+		"optim": "adam",
+		"adam_beta1": 0.9,
+		"adam_beta2": 0.998,
+		"decay_method": "noam",
+		"warmup_steps": 8000,
+		"learning_rate": 2,
+		"label_smoothing": 0.0,
+		"report_every": 5,
+		"layers": 4,
+		"rnn_size": 256,
+		"word_vec_size": 256,
+		"encoder_type": "transformer",
+		"decoder_type": "transformer",
+		"dropout": [0.1],
+		"position_encoding": true,
+		"share_embeddings": true,
+		"global_attention": "general",
+		"global_attention_function": "softmax",
+		"self_attn_type": "scaled-dot",
+		"heads": 8,
+		"transformer_ff": 2048
+            },
+            "trans": {
+            }
+        }
+    }
+}
