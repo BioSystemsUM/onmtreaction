@@ -1,0 +1,72 @@
+FROM ubuntu:20.04
+
+# Adapted from: 
+# https://github.com/yoshida-lab/docker-base/blob/master/cpu/Dockerfile
+
+# Install some basic utilities
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    ca-certificates \
+    openssh-client \
+    git \
+    sudo \
+    bzip2 \
+    libxrender1 \
+    libxext6 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user and switch to it
+# All users can use /home/user as their home directory
+RUN adduser --disabled-password --gecos '' --shell /bin/bash user &&\
+    echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user &&\
+    mkdir /workspace && chown -R user:user /workspace &&\
+    chmod 777 -R /home/user && chmod 777 -R /workspace
+USER user
+ENV HOME=/home/user
+WORKDIR /workspace
+
+# Install Mambaforge (move from Miniconda)
+RUN curl -so ~/mambaforge.sh -L https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh \
+    && chmod +x ~/mambaforge.sh \
+    && ~/mambaforge.sh -b -p ~/mambaforge \
+    && rm ~/mambaforge.sh \
+    && umask 000
+ENV PATH=/home/user/mambaforge/condabin:$PATH
+ENV CONDA_AUTO_UPDATE_CONDA=false
+
+# Create a Python 3.5 environment
+RUN /home/user/mambaforge/condabin/mamba update -n base mamba conda \
+    && /home/user/mambaforge/condabin/mamba install conda-build \
+    && /home/user/mambaforge/condabin/mamba create -y --name mtpy36 python=3.6 \
+    && /home/user/mambaforge/condabin/mamba clean -ya
+ENV CONDA_DEFAULT_ENV=mtpy35
+ENV CONDA_PREFIX=/home/user/mambaforge/envs/$CONDA_DEFAULT_ENV
+ENV PATH=$CONDA_PREFIX/bin:$PATH
+
+# install pytorch 0.4.1 with CUDA
+RUN conda install -y -n mtpy35 -c pytorch \
+    pytorch=1.6.0 \
+    torchvision \
+    && mamba clean -ya \
+    && python -c "import torch; print('pytorch %s' % torch.__version__)"
+
+# install other packages
+#RUN echo "\nInstall using mamba -------------------------" \
+#    && mamba install -y -n mtpy35 \
+#    rdkit
+
+RUN echo "\nInstall using pip -------------------------" \
+    && pip install --no-cache-dir \
+    torchtext==0.3.1 \
+    OpenNMT-py
+
+RUN echo "\nInstall OpenNMT-py optional requirements -------------------------" \
+    && pip install -r \
+    requirements.opt.txt
+    
+
+WORKDIR /etc
+
+# Set the default command to python3
+CMD ["python3"]
