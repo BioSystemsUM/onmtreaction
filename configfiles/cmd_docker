@@ -2,21 +2,20 @@
 
 docker build -t onmt -f Docker/DockerfileONMT .
 
-docker run -it --rm --gpus all -v ~/Documents/onmt/folder:/home/data/ -u 1000:1000 onmt bash
+docker run -it --rm --gpus all -v ~/Documents/onmtreaction/folder:/home/data/ -u 1000:1000 onmt bash
 
-
-#
-podman run --name onmt -it --rm --user 1000:1000 -v ~/Documents/onmt/folder:/home/data:Z onmt bash
+#In podman, GPU and other hardware specification are configured via software
+podman run --name onmt --privileged -it --rm -v ~/onmtreaction/folder:/home/data onmt bash
 
 ## INSIDE CONTAINER
 
 	> cd data/
 
     # BUILD VOCAB
-	> onmt_build_vocab -config confg.yaml
+	> onmt_build_vocab -config configtrain.yaml
     
     # TRAIN MODEL
-	> onmt_train -config confg.yaml
+	> onmt_train -config configtrain.yaml
 
     # AVERAGE MODEL
 	> cd models/
@@ -24,6 +23,6 @@ podman run --name onmt -it --rm --user 1000:1000 -v ~/Documents/onmt/folder:/hom
 	> cd ../
 
     # TRANSLATE
-	> onmt_translate -config confg.yaml --batch_size 64
+	> onmt_translate -config configtransl.yaml --batch_size 64
 
     # SCORES 

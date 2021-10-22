@@ -1,5 +1,9 @@
-# config.yaml
+# configtrain.yaml
 #pwd = /home/data/
+
+#docker run (...)  --gpus all (...) - see cmd_docker
+#In podman, GPU and other hardware specification are configured via software.
+#Hardware options must be in agreement with docker options
 
 # GENERAL / SAVE OPTS:
 save_data: samples
@@ -12,6 +16,7 @@ data:
   corpus_1:
     path_src: corpus/train.src
     path_tgt: corpus/train.tgt
+    weight: 1
   valid:
     path_src: corpus/val.src
     path_tgt: corpus/val.tgt
@@ -64,13 +69,3 @@ global_attention_function: softmax
 self_attn_type: scaled-dot
 heads: 8
 transformer_ff: 2048
-
-## TRANSLATE
-#model: model/model_average.pt
-#src: corpus/test.src
-#tgt: corpus/test.tgt optional
-#output: pred_model_average.txt
-#
-#batch_size: 64 -> comand line provided value (override of the specified value above) 
-#max_length: 200
-#replace_unk: true
