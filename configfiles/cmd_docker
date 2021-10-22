@@ -4,6 +4,8 @@ docker build -t onmt -f Docker/DockerfileONMT .
 
 docker run -it --rm --gpus all -v ~/Documents/onmt/folder:/home/data/ -u 1000:1000 onmt bash
 
+
+#
 podman run --name onmt -it --rm --user 1000:1000 -v ~/Documents/onmt/folder:/home/data:Z onmt bash
 
 ## INSIDE CONTAINER
