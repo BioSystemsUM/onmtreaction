@@ -4,6 +4,8 @@ model_*
 # DATASETS FOLDERS AND FILES
 MIT*
 STEREO*
+.idea
+Testfolder_analysis*
 
 *.src
 *.tgt
