@@ -6,8 +6,11 @@ MIT*
 STEREO*
 .idea
 Testfolder_analysis*
-Rhea
+
+Rhea/data
+.ipynb_checkpoints
 *logger*
+
 
 *.src
 *.tgt

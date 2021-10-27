@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # coding: utf-8
 
 ## Packages
@@ -61,7 +61,7 @@ def calc_state(total):
 
 
 def state_report(total, total_1, total_125, total_25, total_375, total_50, total_625, total_75, total_875, index):
-    """Auxiliary function"""
+    '''Auxiliary function'''
     if index == total_1:
         print('= 1%')
     elif index == total_125:
@@ -83,7 +83,7 @@ def state_report(total, total_1, total_125, total_25, total_375, total_50, total
 
 
 def join_all(df_src, df_tgt):
-    """Join source and target smiles"""
+    '''Join source and target smiles'''
     print("\n\nJoin Source and Target SMILES\nSource: ")
     print(df_src.shape)
     print("\nTarget: ")
@@ -247,8 +247,7 @@ def df_count(df_src, df_tgt, df_control, data_type, file_name):
     df_control = verification(df_control, data_type, df_src, df_tgt, df_reaction, all_smiles, src_smiles_stereo,
                               tgt_smiles_stereo, src_smiles_nstereo, tgt_smiles_nstereo)
     # save
-    print(
-        "\n\n_ _ _ _ _ _ _ _ _ _ _\n" + data_type + " dataframes successfully saved (folder: " + file_name[0:-6] + "/)")
+    print("\n\n_ _ _ _ _ _ _ _ _ _ _\n" + data_type + " dataframes successfully saved (folder: " + file_name[0:-6]+ "/)")
     print("\n________________________________________________________________________________________________________")
     return ([df_src, src_smiles_stereo, src_smiles_nstereo, df_tgt, tgt_smiles_stereo, tgt_smiles_nstereo, df_reaction,
              all_smiles], df_control)
@@ -256,14 +255,13 @@ def df_count(df_src, df_tgt, df_control, data_type, file_name):
 
 def general_counts(datasets_list, dataset_type):  # train_src, train_tgt, val_src, val_tgt, test_src, test_tgt
     df_control = pd.DataFrame(columns=['Type data', 'DF name', 'N Rows', 'N Cols', 'Col name'])
-    # type_of_data => src, src_smiles_stereo, src_smiles_nstereo, tgt, tgt_smiles_stereo, tgt_smiles_nstereo,
-    # reaction, all_smiles
+    # type_of_data => src, src_smiles_stereo, src_smiles_nstereo, tgt, tgt_smiles_stereo, tgt_smiles_nstereo, reaction, all_smiles
     (train_list, df_control) = df_count(datasets_list[0], datasets_list[1], df_control, "TRAIN",
                                         dataset_type + '_analysis/train')
     (valid_list, df_control) = df_count(datasets_list[2], datasets_list[3], df_control, "VALID",
-                                        dataset_type + '_analysis/test')
+                                       dataset_type + '_analysis/test')
     (test_list, df_control) = df_count(datasets_list[4], datasets_list[5], df_control, "TEST",
-                                       dataset_type + '_analysis/valid')
+                                        dataset_type + '_analysis/valid')
     df_control.to_csv(dataset_type + '_analysis/df_control.csv')
     print('\n\nSaving control information....\n\n\n\t\t\t\t\tALL DATASETS PROCESSED\n\n\n')
     return (train_list, valid_list, test_list, df_control)
