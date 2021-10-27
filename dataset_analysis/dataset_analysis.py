@@ -263,7 +263,7 @@ def general_counts(datasets_list, dataset_type):  # train_src, train_tgt, val_sr
     (test_list, df_control) = df_count(datasets_list[4], datasets_list[5], df_control, "TEST",
                                         dataset_type + '_analysis/valid')
     df_control.to_csv(dataset_type + '_analysis/df_control.csv')
-    print('\n\nSaving control information....\n\n\n\t\t\t\t\tALL DATASETS PROCESSED')
+    print('\n\nSaving control information....\n\n\n\t\t\t\t\tALL DATASETS PROCESSED\n\n\n')
     return (train_list, valid_list, test_list, df_control)
 
 
