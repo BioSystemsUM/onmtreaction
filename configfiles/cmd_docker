@@ -4,7 +4,7 @@ docker build -t onmt -f Docker/DockerfileONMT .
 
 docker run -it --rm --gpus all -v ~/Documents/onmtreaction/folder:/home/data/ -u 1000:1000 onmt bash
 
-#In podman, GPU and other hardware specification are configured via software
+#In podman, GPU and other hardware specifications are configured via software
 podman run --name onmt --privileged -it --rm -v ~/onmtreaction/folder:/home/data onmt bash
 
 ## INSIDE CONTAINER

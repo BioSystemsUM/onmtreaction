@@ -8,7 +8,7 @@ src: corpus/test.src
 
 output: pred_model_average.txt
 batch_size: 64
-#comand line provided value (override of the specified value above) 
+#command line provided value (override of the specified value above) 
 
 max_length: 200
 replace_unk: true
