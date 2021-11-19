@@ -2,7 +2,7 @@
 #pwd = /home/data/
 
 #docker run (...)  --gpus all (...) - see cmd_docker
-#In podman, GPU and other hardware specification are configured via software.
+#In podman, GPU and other hardware specifications are configured via software.
 #Hardware options must be in agreement with docker options
 
 # GENERAL / SAVE OPTS:
