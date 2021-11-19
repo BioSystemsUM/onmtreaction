@@ -6,37 +6,28 @@ WORKDIR /root
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV LANG=C.UTF-8
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    wget \
-	nano \
-    && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        python3 \
+        python3-distutils \
+        wget \
+        nano \
+        python-rdkit \
+        librdkit1 \
+        rdkit-data \
+        git \
+        && \
+    wget -nv https://bootstrap.pypa.io/get-pip.py && \
+    python3 get-pip.py && \
+    rm get-pip.py && \
+    apt-get autoremove -y wget && \
     rm -rf /var/lib/apt/lists/*
 
-# Install conda
-ENV CONDA_DIR /opt/conda
-ENV PATH $CONDA_DIR/bin:$PATH
-
-RUN MINICONDA="Miniconda3-latest-Linux-x86_64.sh" && \
-    wget --quiet https://repo.continuum.io/miniconda/$MINICONDA && \
-    bash $MINICONDA -b -p /miniconda && \
-    rm -f $MINICONDA
-
-ENV PATH /miniconda/bin:$PATH
-
-#Install python and packages
-ARG python_version=3.9
-
-RUN conda update -n base -c defaults conda -y
-RUN conda install -y -c anaconda pandas && conda clean -afy
-RUN conda install -y -c anaconda matplotlib && conda clean -afy
-RUN conda install -y -c anaconda seaborn && conda clean -afy
-RUN conda install -y -c anaconda notebook && conda clean -afy
-RUN conda install -y -c anaconda python=${python_version}
-
-RUN conda install -y -c rdkit rdkit && conda clean -afy
-RUN python3 -m pip -q --no-cache-dir install --upgrade pip
-RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed python3-distutils
-RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed git+https://github.com/OpenNMT/OpenNMT-py.git
+RUN python3 -m pip -q --no-cache-dir install --upgrade pandas
+RUN python3 -m pip -q --no-cache-dir install --upgrade matplotlib
+RUN python3 -m pip -q --no-cache-dir install --upgrade seaborn
+RUN python3 -m pip -q --no-cache-dir install git+https://github.com/OpenNMT/OpenNMT-py.git
+#RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed git+https://github.com/OpenNMT/OpenNMT-py.git
 
 ENV LANG=C.UTF-8
 
