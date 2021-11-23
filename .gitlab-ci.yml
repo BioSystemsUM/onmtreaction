@@ -2,28 +2,36 @@ image: docker:latest
 services:
   - docker:dind
 
+variables:
+  REGISTRY: "registry.bio.di.uminho.pt"
+  IMAGE_PRODUCTION:  "${REGISTRY}/laura_duro/onmtreaction"
+  DOCKER_FOLDER_PROD: "/builds/laura_duro/onmtreaction"
+
+before_script:
+  - export SHORT_SHA=$(echo $CI_COMMIT_SHA | cut -c 1-8)
+  - export DATE=$(date +"%y%m%d.%H%M")
+  - export TAG=${DATE}.${SHORT_SHA}
+
 stages:
-  - build
-  - release
+ - build-app
 
-build:
-  stage: build
-  script:
-    - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest -f Docker/Dockerfile_onmtreaction .
-
-release-image:
-   stage: release
+prod-build-app:
+   stage: build-app
+   tags:
+      - docker-build
    script:
-    - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
-    - echo "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
-    - echo "$CI_REGISTRY_IMAGE:latest"
-#    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:latest
-#   only:
-#    - main
-#    - dev
+      - pwd
+      - ls ${DOCKER_FOLDER_PROD} || true
+      - if [ -z "${CI_COMMIT_TAG}" ]; then CI_COMMIT_TAG="latest"; fi;
+      - echo "$CI_COMMIT_TAG" || true
+      - docker build --build-arg app_version=${CI_COMMIT_TAG} -f ${DOCKER_FOLDER_PROD}/Docker/Dockerfile_onmtreaction -t ${IMAGE_PRODUCTION} ${DOCKER_FOLDER_PROD}
+      - docker tag ${IMAGE_PRODUCTION} ${IMAGE_PRODUCTION}:${CI_COMMIT_TAG}
+      - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" $REGISTRY
+      - docker push ${IMAGE_PRODUCTION}
+      - docker push ${IMAGE_PRODUCTION}:${CI_COMMIT_TAG}
+   only:
+      - master
+      - tags
 
 
 
