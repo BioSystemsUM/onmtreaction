@@ -29,9 +29,9 @@ prod-build-app:
       - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" $REGISTRY
       - docker push ${IMAGE_PRODUCTION}
       - docker push ${IMAGE_PRODUCTION}:${CI_COMMIT_TAG}
-   only:
-      - master
-      - tags
+#   only:
+#      - master
+#      - tags
 
 
 
