@@ -26,3 +26,4 @@ podman run --name onmt --privileged -it --rm -v ~/onmtreaction/folder:/home/data
 	> onmt_translate -config configtransl.yaml --batch_size 64
 
     # SCORES 
+	> 

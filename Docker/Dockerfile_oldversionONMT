@@ -10,7 +10,7 @@ RUN apt-get update && \
         python3 \
         python3-distutils \
         wget \
-	nano \
+	    nano \
         && \
     wget -nv https://bootstrap.pypa.io/get-pip.py && \
     python3 get-pip.py && \
