@@ -11,8 +11,8 @@ build:
   script:
     - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest -f Docker/Dockerfile_onmtreaction .
-    - docker tag ${IMAGE_PRODUCTION} ${IMAGE_PRODUCTION}:${CI_COMMIT_TAG}
+    - docker build --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest -f Docker/Dockerfile_onmtreaction .
+    #- docker tag ${IMAGE_PRODUCTION} ${IMAGE_PRODUCTION}:${CI_COMMIT_TAG}
 
 release-image:
   stage: release
