@@ -15,7 +15,6 @@ RUN apt-get update && \
         python-rdkit \
         librdkit1 \
         rdkit-data \
-        git \
         && \
     wget -nv https://bootstrap.pypa.io/get-pip.py && \
     python3 get-pip.py && \
@@ -23,11 +22,14 @@ RUN apt-get update && \
     apt-get autoremove -y wget && \
     rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m pip -q --no-cache-dir install --upgrade pandas
-RUN python3 -m pip -q --no-cache-dir install --upgrade matplotlib
-RUN python3 -m pip -q --no-cache-dir install --upgrade seaborn
-RUN python3 -m pip -q --no-cache-dir install git+https://github.com/OpenNMT/OpenNMT-py.git
-#RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed git+https://github.com/OpenNMT/OpenNMT-py.git
+RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed pandas
+RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed matplotlib
+RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed seaborn
+
+COPY OpenNMT-py/ /home/OpenNMT-py
+WORKDIR /home/OpenNMT-py
+RUN python3 -m pip -q --no-cache-dir install -e .
+#RUN python3 -m pip -q --no-cache-dir install -r requirements.opt.txt
 
 ENV LANG=C.UTF-8
 
