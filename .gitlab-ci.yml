@@ -4,7 +4,7 @@ services:
 
 stages:
   - build
-  - deploy
+  - release
 
 build:
   stage: build
@@ -13,15 +13,15 @@ build:
     - docker pull $CI_REGISTRY_IMAGE:latest || true
     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest -f Docker/Dockerfile_onmtreaction .
 
-deploy:
-   stage: deploy
+release-image:
+   stage: release
    script:
     - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker push $CI_REGISTRY_IMAGE:latest
-   only:
-    - main
-    - dev
+#   only:
+#    - main
+#    - dev
 
 
 
