@@ -12,7 +12,7 @@ Rhea/data
 .ipynb_checkpoints
 *logger*
 
-
+*aux*
 *.src
 *.tgt
 pred*
