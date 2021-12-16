@@ -1,0 +1,15 @@
+rm vocab/vocab.src
+
+# BUILD VOCAB
+onmt_build_vocab -config configtrain.yaml
+
+# TRAIN MODEL
+onmt_train -config configtrain.yaml
+
+# AVERAGE MODEL
+onmt_average_models -m model/model_step_* -o model/model_average.pt
+
+# TRANSLATE
+onmt_translate -config configtransl.yaml --batch_size 64
+
+# SCORES

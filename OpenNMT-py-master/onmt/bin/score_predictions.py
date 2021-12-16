@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# score_predictions from Molecular Transformer
+
 from __future__ import division, unicode_literals
 import argparse
 #from rdkit import Chem

@@ -37,7 +37,7 @@ setup(
             "onmt_translate=onmt.bin.translate:main",
             "onmt_release_model=onmt.bin.release_model:main",
             "onmt_average_models=onmt.bin.average_models:main",
-            "onmt_build_vocab=onmt.bin.build_vocab:main",
+            "onmt_build_vocab=onmt.bin.build_vocab:main"
             "onmt_score_predictions=onmt.bin.score_prediction:main"
         ],
     }

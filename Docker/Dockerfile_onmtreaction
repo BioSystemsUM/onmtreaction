@@ -25,12 +25,14 @@ RUN apt-get update && \
 RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed pandas
 RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed matplotlib
 RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed seaborn
+#RUN python3 -m pip -q --no-cache-dir install --upgrade --upgrade-strategy only-if-needed OpenNMT-py
 
-COPY OpenNMT-py/ /home/OpenNMT-py
+
+COPY OpenNMT-py-master/ /home/OpenNMT-py
 WORKDIR /home/OpenNMT-py
 RUN python3 -m pip -q --no-cache-dir install -e .
 #RUN python3 -m pip -q --no-cache-dir install -r requirements.opt.txt
 
 ENV LANG=C.UTF-8
 
-WORKDIR /home
+WORKDIR /home/data

@@ -1,8 +1,8 @@
 #docker commands
 
-docker build -t onmt -f Docker/DockerfileONMT .
+docker build -t onmtreaction -f Docker/Dockerfile_onmtreaction .
 
-docker run -it --rm --gpus all -v ~/Documents/onmtreaction/folder:/home/data/ -u 1000:1000 onmt bash
+docker run -it --rm --gpus all -v ~/Documents/onmtreaction/folder:/home/data/ -u 1000:1000 onmtreaction bash
 
 #In podman, GPU and other hardware specifications are configured via software
 podman run --name onmt --privileged -it --rm -v ~/onmtreaction/folder:/home/data onmt bash
@@ -19,7 +19,7 @@ podman run --name onmt --privileged -it --rm -v ~/onmtreaction/folder:/home/data
 
     # AVERAGE MODEL
 	> cd models/
-	> onmt_average_model -m model_step_* -o model_average.pt 
+	> onmt_average_models -m model/model_step_* -o model/model_average.pt
 	> cd ../
 
     # TRANSLATE
