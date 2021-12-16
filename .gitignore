@@ -9,10 +9,10 @@ Data/
 *.tgt
 pred*
 
-# Auxiliary files
+# AUXILIARY FILES
 .idea
 .ipynb_checkpoints
 *logger*
 
-# Analysis
-Data_analysis/
+# ANALYSYS
+Data_analysis/*
